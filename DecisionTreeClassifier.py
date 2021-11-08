@@ -64,8 +64,6 @@ class DecisionTreeClassifier:
             root_node = root_node[0]  # Set the root_node to the new starting point
 
         if not root_node.children and not root_node.next: # Once a leaf node has been found
-            if root_node.value == None:
-                print("OH GOD")
             return root_node.value # Prediction
         else:
             feature_value = instance[root_node.value]
@@ -74,11 +72,10 @@ class DecisionTreeClassifier:
                     # If a feature value in the current instance is found in a child, set the new root as that child
                     if feature_value == root_node.children[i].value:
                         return self.predict(instance, root_node.children[i].next) # Recursively parse through the tree
-            #elif root_node.next is not None:
-            #    # If no children contained a match, then go on to the next node
-            #    return self.predict(instance, root_node.next) # Recursively parse through the tree
+            elif root_node.next is not None:
+                # If no children contained a match, then go on to the next node
+                return self.predict(instance, root_node.next) # Recursively parse through the tree
             else:
-                print('NO PREDICTION FOUND')
                 return None
 
     def evaluate(self, test_data, test_labels):
